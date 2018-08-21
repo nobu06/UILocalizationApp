@@ -11,10 +11,11 @@ public class LocalizationManager : MonoBehaviour {
     private Dictionary<string, string> localizedText;
     private bool isReady = false;       // indicates whether the program finished loading the localized text 
 
+    private string missingTextString = "Localized text not found";  //
 
-	private void Awake()
-	{
-        if (instance == null)       
+    private void Awake()
+    {
+        if (instance == null)
         {
             instance = this;
         }
@@ -25,7 +26,7 @@ public class LocalizationManager : MonoBehaviour {
 
         // to make it persist through the life cycle of the game
         DontDestroyOnLoad(gameObject);
-	}
+    }
 
 	public void LoadLocalizedText(string fileName)
     {
@@ -52,6 +53,18 @@ public class LocalizationManager : MonoBehaviour {
         }
 
         isReady = true;
+    }
+
+    // return the value in the dictionary
+    public string GetLocalizedValue(string key)
+    {
+        string result = missingTextString;
+        if (localizedText.ContainsKey(key))
+        {
+            result = localizedText[key];
+        }
+
+        return result;
     }
 
 
